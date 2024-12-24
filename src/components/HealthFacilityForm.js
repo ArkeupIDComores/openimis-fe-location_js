@@ -20,6 +20,7 @@ import {
 import { fetchHealthFacility, clearHealthFacility } from "../actions";
 import HealthFacilityMasterPanel from "../components/HealthFacilityMasterPanel";
 import HealthFacilityCatchmentPanel from "../components/HealthFacilityCatchmentPanel";
+import {HEALTH_FACILITY_CODE_MAX_LENGTH} from "../constants";
 
 const HF_FORM_CONTRIBUTION_KEY = "location.HealthFacility";
 
@@ -51,6 +52,11 @@ class HealthFacilityForm extends Component {
       "fe-location",
       "healthFacilityForm.isHealthFacilityContractMandatory",
       false,
+    );
+    this.codeMaxLength = props.modulesManager.getConf(
+      "fe-location",
+      "healthFacilityForm.codeMaxLength",
+      HEALTH_FACILITY_CODE_MAX_LENGTH,
     );
   }
 
@@ -114,6 +120,7 @@ class HealthFacilityForm extends Component {
     // TODO - after such component is available, add contract dates as date range, not two separate dates
     if (this.state.isSaved) return false;
     if (!this.state.healthFacility.code) return false;
+    if(this.state.healthFacility.code.length > this.codeMaxLength) return false;
     if (this.props.isHFCodeValid === false) return false;
     if (!this.state.healthFacility.name) return false;
     if (!this.state.healthFacility.location) return false;

@@ -12,6 +12,7 @@ import {
 import { Grid } from "@material-ui/core";
 import { connect } from "react-redux";
 import { HFCodeValidationCheck, HFCodeValidationClear, HFCodeSetValid } from "../actions";
+import { HEALTH_FACILITY_CODE_MAX_LENGTH } from "../constants";
 
 const styles = (theme) => ({
   item: theme.paper.item,
@@ -20,7 +21,7 @@ const styles = (theme) => ({
 class HealthFacilityMasterPanel extends FormPanel {
   constructor(props) {
     super(props);
-    this.codeMaxLength = props.modulesManager.getConf("fe-location", "healthFacilityForm.codeMaxLength", 8);
+    this.codeMaxLength = props.modulesManager.getConf("fe-location", "healthFacilityForm.codeMaxLength", HEALTH_FACILITY_CODE_MAX_LENGTH);
     this.accCodeMaxLength = props.modulesManager.getConf("fe-location", "healthFacilityForm.accCodeMaxLength", 25);
     this.accCodeMandatory = props.modulesManager.getConf("fe-location", "healthFacilityForm.accCodeMandatory", false);
     this.isHealthFacilityStatusEnabled  = props.modulesManager.getConf("fe-location", "healthFacilityForm.isHealthFacilityStatusEnabled", false);
