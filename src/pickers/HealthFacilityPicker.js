@@ -18,6 +18,7 @@ const HealthFacilityPicker = (props) => {
     placeholder,
     multiple,
     region,
+    prescriber,
     district,
     level,
   } = props;
@@ -29,8 +30,8 @@ const HealthFacilityPicker = (props) => {
   Array.isArray(district) ? pickedDistrictsUuids = district?.map((district) => district?.uuid) : pickedDistrictsUuids.push(district?.uuid);
   const { data, isLoading, error } = useGraphqlQuery(
     `
-    query HealthFacilityPicker ($str: String, $region: String, $district: [String], $level: String) {
-      healthFacilities: healthFacilitiesStr(first: 20, str: $str, regionUuid: $region, districtsUuids: $district, level: $level) {
+    query HealthFacilityPicker ($str: String, $region: String, $district: [String], $level: String, $prescriber: String) {
+      healthFacilities: healthFacilitiesStr(first: 20, str: $str, regionUuid: $region, districtsUuids: $district, level: $level, prescriber: $prescriber) {
         edges {
           node {
             id
@@ -46,7 +47,7 @@ const HealthFacilityPicker = (props) => {
       }
     }
   `,
-    { level, region: region?.uuid, district: pickedDistrictsUuids, str: searchString },
+    { level, region: region?.uuid, district: pickedDistrictsUuids, str: searchString  , prescriber: prescriber?.uuid },
     { skip: true },
   );
 
